@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+
+{% block content %}
+
+<p>searching for check in on {{ search_info.check_in }} and check out on {{ search_info.check_out }}</p>
+
+{% if unavailable_list %}
+
+    {% for obj in unavailable_list %}
+        date {{ obj.date }} not available, please choose another date.
+    {% endfor %}
+
+{% else %}
+
+    {% for obj in available_list %}
+        <li>{{ obj.date }} - £ {{ obj.price_per_night }}</li>
+    {% endfor %}
+
+    <form action="{% url 'booking:booking-form' check_in=search_info.check_in check_out=search_info.check_out room_type=search_info.room_type pax=search_info.pax %}" method="post">
+        {% csrf_token %}
+        <button type="submit">BOOK NOW</button>
+    </form>
+    
+{% endif %}
+
+{% endblock %}
+

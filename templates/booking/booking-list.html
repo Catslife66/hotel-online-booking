@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if history_bookings %}
+    {% for booking in history_bookings %}
+        <div>
+            Booking Details:
+            <p>check in: {{ booking.check_in }}</p>
+            <p>check out: {{ booking.check_out }}</p>
+            <span>room: {{ booking.room_type }}</span><span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span>
+            <p>Total: £ {{booking.total_price }}</p>
+            <a href="{% url 'booking:booking-detail' booking.id %}">View details</a>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if coming_bookings %}
+    {% for booking in coming_bookings %}
+        <div>
+            Booking Details:
+            <p>check in: {{ booking.check_in }}</p>
+            <p>check out: {{ booking.check_out }}</p>
+            <span>room: {{ booking.room_type }}</span><span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span>
+            <p>Total: £ {{booking.total_price }}</p>
+            <p>Status: {{ booking.cancel_status }}</p>
+            {% if not booking.is_cancelled %}
+                <a href="{% url 'booking:booking-update' booking.id %}">Update guest detail</a>
+                <a href="{% url 'booking:booking-cancel' booking.id %}">Cancel booking</a>
+            {% endif %}
+            <a href="{% url 'booking:booking-detail' booking.id %}">View details</a>
+        </div>
+    {% endfor %}
+{% endif %}
+
+{% if not history_bookings and not coming_bookings %}
+<p>You have no bookings.</p>
+{% endif %}
+{% endblock %}

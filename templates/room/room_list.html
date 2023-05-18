@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for obj in obj_list %}
+    <div>
+        <p>{{ obj.title }}</p> - capacity: {{ obj.capacity }}
+        <img src="{{ obj.image.url }}" alt="{{ obj.title }} image">
+        {{ obj.description }}
+        £ {{ obj.rooms.first.price_per_night }}
+    </div>
+    {% endfor %}
+{% endblock %}

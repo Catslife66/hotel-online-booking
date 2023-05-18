@@ -1,0 +1,32 @@
+<form action="." method="get">
+    <label for="check-in">Check in:</label>
+    <input type="date" name="check-in" id="check-in" value="{{ search_info.check_in }}">
+
+    <label for="check-out">Check out:</label>
+    <input type="date" name="check-out" id="check-out" value="{{ search_info.check_out }}">
+
+    <label for="room-type">Choose a room type:</label>
+    <select name="room-type" id="room-type" data-selected="{{ search_info.room_type }}">
+        <option value="1" class="room-type">Superior Room</option>
+        <option value="2" class="room-type">City View Room</option>
+        <option value="3" class="room-type">Sea View Room</option>
+    </select>
+
+    <label for="pax">How many in your group:</label>
+    <select name="pax" id="pax" data-selected="{{ search_info.pax }}">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+    <button type="submit">Update</button>
+</form>
+
+<script>
+    const roomType = document.getElementById('room-type')
+    const selectedValue = Number(roomType.dataset.selected)
+    roomType.value = selectedValue
+
+    const pax = document.getElementById('pax')
+    const paxValue = Number(pax.dataset.selected)
+    pax.value = paxValue
+</script>

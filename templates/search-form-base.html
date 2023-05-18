@@ -1,0 +1,50 @@
+<form action="{% url 'room:search' %}" method="get">
+    <label for="check-in">Check in:</label>
+    <input type="date" name="check-in" id="check-in">
+
+    <label for="check-out">Check out:</label>
+    <input type="date" name="check-out" id="check-out">
+
+    <label for="room-type">Choose a room type:</label>
+    <select name="room-type" id="room-type">
+        <option value="1">Superior Room</option>
+        <option value="2">City View Room</option>
+        <option value="3">Sea View Room</option>
+    </select>
+
+    <label for="pax">How many in your group:</label>
+    <select name="pax" id="pax">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    let td = new Date()
+    let today = td.toJSON().split('T')[0]
+    let tmw = new Date();
+    tmw.setDate(tmw.getDate() + 1);
+    let tomorrow = tmw.toJSON().split('T')[0]
+    
+    const checkIn = document.getElementById('check-in')
+    checkIn.defaultValue = today
+    checkIn.setAttribute('min', today)
+    
+    const checkOut = document.getElementById('check-out')
+    checkOut.defaultValue = tomorrow
+    checkOut.setAttribute('min', tomorrow)
+
+    checkIn.addEventListener('change', ()=> {
+        let checkInValue = checkIn.value
+        let dateValue = new Date(checkInValue)
+        dateValue.setDate(dateValue.getDate() + 1)
+        let checkOutValue = dateValue.toJSON().split('T')[0]
+        let checkOut = document.getElementById('check-out')
+        checkOut.defaultValue = checkOutValue
+        checkOut.setAttribute('min', checkOutValue)
+
+    })
+
+</script>

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<form action="." method="post">
+    {% csrf_token %}
+    
+    <label for="">{{ form.guest_name.label_tag }}</label>
+    {{form.guest_name }}
+    <label for="">{{ form.email.label_tag }}</label>
+    {{form.email }}
+    <label for="">{{ form.phone.label_tag }}</label>
+    {{form.phone }}
+
+
+    {% if forms.errors %}
+        error message {{ forms.errors }}
+    {% endif %}
+
+    <button type="submit">Update</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div>
+    <h3>Booking No. {{ booking.id }} </h3>
+    <span>created at: {{ booking.created_at|date:'d M Y, H:s' }}</span>
+    
+    <div>
+        Booking Details:
+        <p>check in: {{ booking.check_in }}</p>
+        <p>check out: {{ booking.check_out }}</p>
+        <span>room: {{ booking.room_type }}</span><span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span>
+        <p>Total: £ {{booking.total_price }}</p>
+    </div>
+    
+    <div>
+        Guest Details:
+        <p>Guest name: {{ booking.guest_name }}</p>
+        <p>email: {{ booking.email }}</p>
+        <p>phone: {{ booking.phone }}</p>
+        <a href="{% url 'booking:booking-update' booking.id %}">Update guest details</a>
+    </div>
+</div>
+
+{% endblock %}

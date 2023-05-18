@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<form action="." method="post">
+    {% csrf_token %}
+    
+    <label for="">{{ form.guest_name.label_tag }}</label>
+    {{form.guest_name }}
+    <label for="">{{ form.email.label_tag }}</label>
+    {{form.email }}
+    <label for="">{{ form.phone.label_tag }}</label>
+    {{form.phone }}
+
+
+    {% if forms.errors %}
+        error message {{ forms.errors }}
+    {% endif %}
+    <button type="submit">Submit</button>
+</form>
+<div>
+    <h3>Booking detail: </h3>
+    <p>{{ info.check_in }} to {{ info.check_out }}</p>
+    <span>room type: {{ type_of_room }}</span> for <span> {{ los }} {% if los > 1 %}nights {% else %} night {% endif %}</span>
+    <p>{{ info.pax}} adults</p>
+    <p>Total: {{ total_price }}</p>
+    <form action="{% url 'room:search' %}" method="get">
+        <input type="hidden" name="check-in" value="{{ info.check_in }}">
+        <input type="hidden" name="check-out" value="{{ info.check_out }}">
+        <input type="hidden" name="room-type" value="{{ info.room_type }}">
+        <input type="hidden" name="pax" value="{{ info.pax }}">
+        <button type="submit">Change</button>
+    </form>
+</div>
+
+{% endblock %}
