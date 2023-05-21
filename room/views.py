@@ -28,16 +28,14 @@ def search(request):
 
     available_list = Room.objects.search_available(check_in, check_out, room_type)
     booking_url = reverse('booking:booking-form', args=[check_in, check_out, room_type, pax])
+    unavailable_list = Room.objects.filter_unavailable(check_in, check_out, room_type)
     
     context = {
         'available_list': available_list,
         'search_info': search_info,
-        'booking_url': booking_url
+        'booking_url': booking_url,
+        'unavailable_list': unavailable_list,
     }
-    
-    unavailable_list = Room.objects.filter_unavailable(check_in, check_out, room_type)
-    if unavailable_list:
-        context['unavailable_list'] = unavailable_list
 
     return render(request, 'room/room-search.html', context)
 

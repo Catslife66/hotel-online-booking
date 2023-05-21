@@ -1,15 +1,31 @@
 {% extends 'base.html' %}
 
+{% block title %} Booking successful {% endblock %}
+
 {% block content %}
 
-{% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+<p>Your booking is confirmed.</p>
 
-{% include 'booking/booking-detail.html' with booking=booking %}
+<div>
+    <h3>Booking No. {{ booking.id }} </h3>
+    <span>created at: {{ booking.created_at|date:'d M Y, H:s' }}</span>
+    
+    <div>
+        Booking Details:
+        <p>check in: {{ booking.check_in }}</p>
+        <p>check out: {{ booking.check_out }}</p>
+        <span>room: {{ booking.room_type }}</span><span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span>
+        <p>Total: £ {{booking.total_price }}</p>
+    </div>
+    
+    <div>
+        Guest Details:
+        <p>Guest name: {{ booking.guest_name }}</p>
+        <p>email: {{ booking.email }}</p>
+        <p>phone: {{ booking.phone }}</p>
+        <a href="{% url 'booking:booking-update' booking.id %}">Update guest details</a>
+    </div>
+</div>
+
 
 {% endblock %}

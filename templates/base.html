@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- styles -->
+    <link rel="stylesheet" href="{% block style %}{% endblock %}">
+
     <!-- htmx -->
     <script src="{% static 'js/htmx.min.js' %}" defer></script>
     <title>MyHotel Online Booking</title>
@@ -27,5 +31,7 @@
     {% block content %}
         my hotel web
     {% endblock%}
+
+    <script src="https://js.stripe.com/v3/"></script>
 </body>
 </html>

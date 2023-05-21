@@ -10,6 +10,7 @@
             <p>check out: {{ booking.check_out }}</p>
             <span>room: {{ booking.room_type }}</span><span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span>
             <p>Total: £ {{booking.total_price }}</p>
+            <p>Payment status: {{ booking.is_paid }}</p>
             <a href="{% url 'booking:booking-detail' booking.id %}">View details</a>
         </div>
     {% endfor %}
@@ -23,6 +24,7 @@
             <p>check out: {{ booking.check_out }}</p>
             <span>room: {{ booking.room_type }}</span><span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span>
             <p>Total: £ {{booking.total_price }}</p>
+            <p>Payment status: {{ booking.is_paid }}</p>
             <p>Status: {{ booking.cancel_status }}</p>
             {% if not booking.is_cancelled %}
                 <a href="{% url 'booking:booking-update' booking.id %}">Update guest detail</a>

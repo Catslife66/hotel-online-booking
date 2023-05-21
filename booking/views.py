@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Sum
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect
 
@@ -14,7 +14,7 @@ from room.models import Room, RoomType
 
 
 @login_required
-def booking_view(request, check_in, check_out, room_type, pax):
+def booking_form(request, check_in, check_out, room_type, pax):
     user = request.user.id
     info = {'check_in': check_in, 'check_out': check_out, 'room_type': room_type, 'pax': pax}
     rooms = Room.objects.search_available(check_in, check_out, room_type)
@@ -37,14 +37,8 @@ def booking_view(request, check_in, check_out, room_type, pax):
             booking.number_of_guests = pax
             booking.total_price = total_price
             booking.save()
-        
-            booking_id = booking.id
-            booking_rooms = [BookingRoom.objects.create(booking_id=booking.id, room=room) for room in rooms]
-            for booking_room in booking_rooms:
-                booking_room.booking_id = booking_id
 
-            next_url = reverse('booking:booking-success', kwargs={'pk': booking.id})
-            return redirect(next_url)
+            return render(request, 'payment/check-out-payment.html', {'booking': booking})
             
         context = {'info': info, 'form': form, 'los': los, 'type_of_room': type_of_room, 'total_price': total_price}
         return render(request, 'booking/booking-form.html', context)
@@ -52,10 +46,17 @@ def booking_view(request, check_in, check_out, room_type, pax):
         return HttpResponse('Something went wrong. Please go back to the home page.')
 
 
-
 def booking_success(request, pk):
-    messages.success(request, 'Your booking is confirmed.')
     booking = Booking.objects.get(pk=pk)
+    booking.is_paid = True
+    booking.save()
+    room_type_id = RoomType.objects.get(title=booking.room_type).id
+    rooms = Room.objects.search_available(booking.check_in, booking.check_out, room_type_id)
+    
+    booking_rooms = [BookingRoom.objects.create(booking_id=booking.id, room=room) for room in rooms]
+    for booking_room in booking_rooms:
+        booking_room.booking_id = booking.id
+
     context = {'booking': booking}
     return render(request, 'booking/booking-success.html', context)
 
@@ -68,6 +69,7 @@ def booking_list(request, pk):
     return render(request, 'booking/booking-list.html', context)
 
 
+@login_required
 def booking_detail(request, pk):
     booking = Booking.objects.get(id=pk)
     return render(request, 'booking/booking-detail.html', {'booking': booking})
@@ -98,4 +100,3 @@ def cancel_booking(request, pk):
     return render(request, 'booking/booking-cancel.html', {'booking':booking})
 
     
-

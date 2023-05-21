@@ -29,4 +29,27 @@
     const pax = document.getElementById('pax')
     const paxValue = Number(pax.dataset.selected)
     pax.value = paxValue
+
+    let td = new Date()
+    let today = td.toJSON().split('T')[0]
+    let tmw = new Date();
+    tmw.setDate(tmw.getDate() + 1);
+    let tomorrow = tmw.toJSON().split('T')[0]
+    
+    const checkIn = document.getElementById('check-in')
+    checkIn.setAttribute('min', today)
+    
+    const checkOut = document.getElementById('check-out')
+    checkOut.setAttribute('min', tomorrow)
+
+    checkIn.addEventListener('change', ()=> {
+        let checkInValue = checkIn.value
+        let dateValue = new Date(checkInValue)
+        dateValue.setDate(dateValue.getDate() + 1)
+        let checkOutValue = dateValue.toJSON().split('T')[0]
+        let checkOut = document.getElementById('check-out')
+        checkOut.defaultValue = checkOutValue
+        checkOut.setAttribute('min', checkOutValue)
+
+    })
 </script>

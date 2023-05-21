@@ -23,10 +23,10 @@ class Booking(models.Model):
     total_price = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=True)
     is_paid = models.BooleanField(default=False)
     is_cancelled = models.BooleanField(default=False)
-    is_history = models.BooleanField(default=False)
-
+    
+    
     def __str__(self):
-        return f"Booking No.{self.id} - {self.created_at}"
+        return f"Booking No.{self.id} - {self.created_at} - {self.is_paid}"
     
 
     @property
@@ -41,14 +41,6 @@ class Booking(models.Model):
             return 'Cancelled'
         else:
             return 'Confirmed'
-        
-
-    def save(self, *args, **kwargs):
-        if self.check_out <= datetime.date.today():
-            self.is_history = True
-        else:
-            self.is_history = False
-        super().save(*args, **kwargs)
     
 
 class BookingRoom(models.Model):
@@ -57,7 +49,7 @@ class BookingRoom(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Booking no.{self.booking.id} - {self.room.roomtype} - {self.room.date} - {self.booking.status}"
+        return f"Booking no.{self.booking.id} - {self.room.roomtype} - {self.room.date} - {self.booking.is_paid}"
 
 
 @receiver(post_save, sender=Booking)
