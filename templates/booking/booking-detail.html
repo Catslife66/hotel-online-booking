@@ -1,26 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div>
-    <h3>Booking No. {{ booking.id }} </h3>
-    <span>created at: {{ booking.created_at|date:'d M Y, H:s' }}</span>
-    
-    <div>
-        Booking Details:
-        <p>check in: {{ booking.check_in }}</p>
-        <p>check out: {{ booking.check_out }}</p>
-        <span>room: {{ booking.room_type }}</span><span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span>
-        <p>Total: £ {{booking.total_price }}</p>
+<section class="bg-gray-50 dark:bg-gray-900">
+    <div class="flex flex-col w-full items-center px-6 py-8 mx-auto mt-8 md:h-screen lg:py-0">
+        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8 max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+                <img class="rounded-t-lg" src="{{ room_type.image.url }}" alt="{{ room_type }} image" />
+                <div class="p-2 space-y-4">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Booking No. {{ booking.id }}</h5>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">created at: {{ booking.created_at|date:'d M Y, H:s' }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">check in: {{ booking.check_in }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">check out: {{ booking.check_out }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white"><span>room: {{ booking.room_type }}</span><span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span></p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">Total price: £ {{booking.total_price }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">Guest name: {{ booking.guest_name }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">email: {{ booking.email }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">phone: {{ booking.phone }}</p>
+                    <div class="mt-3">
+                        <a class="text-white bg-dark-base hover:bg-base focus:ring-4 focus:outline-none focus:ring-base font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dark-base dark:hover:bg-base dark:focus:ring-base" href="{% url 'booking:booking-update' booking.id %}">Update guest details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div>
-        Guest Details:
-        <p>Guest name: {{ booking.guest_name }}</p>
-        <p>email: {{ booking.email }}</p>
-        <p>phone: {{ booking.phone }}</p>
-        <a href="{% url 'booking:booking-update' booking.id %}">Update guest details</a>
-    </div>
-</div>
-
+</section>
 {% endblock %}

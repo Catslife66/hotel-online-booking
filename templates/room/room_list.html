@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<section class="bg-white dark:bg-gray-900">
     {% for obj in obj_list %}
-    <div>
-        <p>{{ obj.title }}</p> - capacity: {{ obj.capacity }}
-        <img src="{{ obj.image.url }}" alt="{{ obj.title }} image">
-        {{ obj.description }}
-        £ {{ obj.rooms.first.price_per_night }}
+    <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+        <img class="w-full dark:hidden" src="{{ obj.image.url }}" alt="{{ obj.title }} image">
+        <div class="mt-4 md:mt-0">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">{{ obj.title }}</h2>
+            <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400">{{ obj.description }}</p>
+            <div class="flex flex-row">
+                <div class="pr-4 text-dark-base md:text-lg dark:text-white">capacity: {{ obj.capacity }}</div>
+                <div class="text-dark-base md:text-lg dark:text-white">£ {{ obj.rooms.first.price_per_night }}</div>
+            </div>
+            <div class="flex py-8">
+                <a href="#" class="text-white bg-dark-base dark:text-white hover:bg-rose focus:ring-4 focus:ring-gray-300 font-medium rounded-lg px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-base focus:outline-none dark:focus:ring-dark-base">
+                    Check for availability
+                </a>
+            </div>
+        </div>
     </div>
     {% endfor %}
+</section>
 {% endblock %}

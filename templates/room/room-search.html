@@ -4,26 +4,58 @@
 
 {% block content %}
 
-<p>searching for check in on {{ search_info.check_in }} and check out on {{ search_info.check_out }}</p>
-
-{% if available_list %}
-
-    {% for obj in available_list %}
-        <li>{{ obj.date }} - £ {{ obj.price_per_night }}</li>
-    {% endfor %}
-
-    <form action="{% url 'booking:booking-form' check_in=search_info.check_in check_out=search_info.check_out room_type=search_info.room_type pax=search_info.pax %}" method="post">
-        {% csrf_token %}
-        <button type="submit">BOOK NOW</button>
-    </form>
-
-{% else %}
-
-    {% for obj in unavailable_list %}
-        date {{ obj.date }} not available, please choose another date.
-    {% endfor %}
-    
-{% endif %}
+<section class="bg-white dark:bg-gray-900">
+        {% if available_list %}
+            <div class="flex flex-col py-8 mx-auto max-w-screen-xl lg:py-8 mb-4">
+                {% for obj in available_list %}
+                <div class="flex flex-row justify-between mb-4">
+                    <h3 class="font-bold text-dark-base text-2xl">{{ obj.roomtype }}</h3>
+                    <p class="font-semibold text-dark-base text-lg">From {{ search_info.check_in }} to {{ search_info.check_out }}</p>
+                </div>
+                <div class="flex flex-row border border-base">
+                    <!-- room info -->
+                    <div class="w-full">
+                        <img class="h-auto max-w-lg dark:hidden" src="{{ obj.roomtype.image.url }}" alt="{{ obj.roomtype.title }} image">
+                        <ul>
+                            <!-- list of facilities -->
+                            <li></li>
+                        </ul>
+                    </div>
+                    <!-- benifit -->
+                    <div class="w-full">
+                        <h5 class="font-bold text-dark-base text-lg bg-roseLight pl-6 py-2">benifits</h5>
+                        <ul class="font-bold text-base text-base pl-6">
+                            <li class="mt-4">Non-refundabel</li>
+                            <li class="mt-4">Free Wifi</li>
+                        </ul>
+                    </div>
+                    <!-- date -->
+                    <div class="w-full bg-roseLight">
+                        <h5 class="font-bold text-dark-base text-lg pl-6 py-2">Dates</h5>
+                        <div class="pl-6 mt-4">{{ obj.date }}</div>
+                    </div>
+                    <!-- price_per_night -->
+                    <div class="w-full">
+                        <h5 class="font-bold text-dark-base text-lg bg-roseLight pl-6 py-2">Price per night</h5>
+                        <div class="font-bold text-base text-base pl-6 mt-4">£{{ obj.price_per_night }}</div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="flex flex-row mt-8 justify-end">
+                    <div class="justify-end">
+                        <form action="{% url 'booking:booking-form' check_in=search_info.check_in check_out=search_info.check_out room_type=search_info.room_type pax=search_info.pax %}" method="post">
+                            {% csrf_token %}
+                            <button class="text-white bg-dark-base dark:text-white hover:bg-rose focus:ring-4 focus:ring-gray-300 font-medium rounded-lg px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-base focus:outline-none dark:focus:ring-dark-base" type="submit">BOOK NOW</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {% for obj in unavailable_list %}
+                <p class="mb-4 text-xl tracking-tight font-extrabold text-gray-900 dark:text-white">date {{ obj.date }} not available, please choose another date.</p>
+            {% endfor %}  
+    {% endif %}
+    </div>
+</section>
 
 {% endblock %}
-

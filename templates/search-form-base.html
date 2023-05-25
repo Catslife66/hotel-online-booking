@@ -1,25 +1,38 @@
-<form action="{% url 'room:search' %}" method="get">
-    <label for="check-in">Check in:</label>
-    <input type="date" name="check-in" id="check-in">
-
-    <label for="check-out">Check out:</label>
-    <input type="date" name="check-out" id="check-out">
-
-    <label for="room-type">Choose a room type:</label>
-    <select name="room-type" id="room-type">
-        <option value="1">Superior Room</option>
-        <option value="2">City View Room</option>
-        <option value="3">Sea View Room</option>
-    </select>
-
-    <label for="pax">How many in your group:</label>
-    <select name="pax" id="pax">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-    </select>
-    <button type="submit">Submit</button>
-</form>
+<section class="bg-white dark:bg-gray-900">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-10 lg:px-12 border-2 border-base rounded">
+        <form action="{% url 'room:search' %}" method="get">
+            <div class="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="check-in">Check in:</label>
+                    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="date" name="check-in" id="check-in">
+                </div>
+                <div class="w-full">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="check-out">Check out:</label>
+                    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" type="date" name="check-out" id="check-out">
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="room-type">Choose a room type:</label>
+                    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="room-type" id="room-type">
+                        <option value="1">Superior Room</option>
+                        <option value="2">City View Room</option>
+                        <option value="3">Sea View Room</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="pax">How many in your group:</label>
+                    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" name="pax" id="pax">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid place-items-center">
+                <button class="text-white bg-dark-base hover:bg-rose focus:ring-4 focus:ring-blue-300 font-medium rounded-lg px-10 py-2.5 mr-2 mb-2 dark:bg-rose dark:hover:bg-rose focus:outline-none dark:focus:ring-rose" type="submit">Search</button>
+            </div>
+        </form>
+    </div>
+</section>
 
 <script>
     let td = new Date()

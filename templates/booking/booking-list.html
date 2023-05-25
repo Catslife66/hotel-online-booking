@@ -1,41 +1,65 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<section class="bg-gray-50 dark:bg-gray-900">
 {% if history_bookings %}
-    {% for booking in history_bookings %}
-        <div>
-            Booking Details:
-            <p>check in: {{ booking.check_in }}</p>
-            <p>check out: {{ booking.check_out }}</p>
-            <span>room: {{ booking.room_type }}</span><span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span>
-            <p>Total: £ {{booking.total_price }}</p>
-            <p>Payment status: {{ booking.is_paid }}</p>
-            <a href="{% url 'booking:booking-detail' booking.id %}">View details</a>
+{% for booking in history_bookings %}
+    <div class="flex flex-col w-full items-center px-6 mx-auto mt-3 lg:py-0">
+        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8 max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-2 space-y-4">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Booking No. {{ booking.id }}</h5>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">created at: {{ booking.created_at|date:'d M Y, H:s' }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">check in: {{ booking.check_in }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">check out: {{ booking.check_out }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white"><span>room: {{ booking.room_type }}</span> for<span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span></p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">Total price: £ {{booking.total_price }}</p>
+                    <p>Payment status: {{ booking.is_paid }}</p>
+                    <div class="mt-3">
+                        <a class="text-white bg-dark-base hover:bg-base focus:ring-4 focus:outline-none focus:ring-base font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dark-base dark:hover:bg-base dark:focus:ring-base" href="{% url 'booking:booking-detail' booking.id %}">View details</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% endfor %}
+    </div>
+{% endfor %}
 {% endif %}
 
 {% if coming_bookings %}
-    {% for booking in coming_bookings %}
-        <div>
-            Booking Details:
-            <p>check in: {{ booking.check_in }}</p>
-            <p>check out: {{ booking.check_out }}</p>
-            <span>room: {{ booking.room_type }}</span><span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span>
-            <p>Total: £ {{booking.total_price }}</p>
-            <p>Payment status: {{ booking.is_paid }}</p>
-            <p>Status: {{ booking.cancel_status }}</p>
-            {% if not booking.is_cancelled %}
-                <a href="{% url 'booking:booking-update' booking.id %}">Update guest detail</a>
-                <a href="{% url 'booking:booking-cancel' booking.id %}">Cancel booking</a>
-            {% endif %}
-            <a href="{% url 'booking:booking-detail' booking.id %}">View details</a>
+{% for booking in coming_bookings %}
+    <div class="flex flex-col w-full items-center px-6 py-8 mx-auto mt-8 lg:py-0">
+        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8 max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-2 space-y-4">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">Booking No. {{ booking.id }}</h5>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">created at: {{ booking.created_at|date:'d M Y, H:s' }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">check in: {{ booking.check_in }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">check out: {{ booking.check_out }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white"><span>room: {{ booking.room_type }}</span> for <span>{{ booking.length_of_stay }} {% if booking.length_of_stay > 1 %}nights {% else %} night {% endif %}</span></p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">Total price: £ {{booking.total_price }}</p>
+                    <p class="mb-3 font-medium text-gray-900 dark:text-white">Payment status: {{ booking.is_paid }}</p>
+                    <div class="flex flex-row justify-between mt-3">
+                        <a class="text-white bg-dark-base hover:bg-base focus:ring-4 focus:outline-none focus:ring-base font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dark-base dark:hover:bg-base dark:focus:ring-base" href="{% url 'booking:booking-update' booking.id %}">Update guest detail</a>
+                        {% if not booking.is_cancelled and booking.is_paid %}
+                            <a class="text-dark-base bg-roseLight hover:bg-base hover:text-white focus:ring-4 focus:outline-none focus:ring-base font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dark-base dark:hover:bg-base dark:focus:ring-base" href="{% url 'booking:booking-cancel' booking.id %}">Cancel booking</a>
+                        {% endif %}
+                        <a class="text-white bg-dark-base hover:bg-base focus:ring-4 focus:outline-none focus:ring-base font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dark-base dark:hover:bg-base dark:focus:ring-base" href="{% url 'booking:booking-detail' booking.id %}">View details</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% endfor %}
+    </div>
+{% endfor %}
 {% endif %}
 
 {% if not history_bookings and not coming_bookings %}
-<p>You have no bookings.</p>
+    <div class="flex flex-col w-full items-center px-6 py-8 mx-auto mt-8 lg:py-0">
+        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8 max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+                <p class="mb-3 font-medium text-gray-900 dark:text-white">You have no bookings.</p>
+            </div>
+        </div>
+    </div>
 {% endif %}
+</section>
 {% endblock %}

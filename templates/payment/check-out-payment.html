@@ -4,28 +4,33 @@
 {% block style %}{% static 'css/checkout.css' %}{% endblock %}
 
 {% block content %}
-{% load static %}
 
-<input type="hidden" id="booking_id" name="booking_id" value="{{ booking.id }}">
 
-<!-- Display a payment form -->
-<form id="payment-form">
+<section class="bg-gray-50 dark:bg-gray-900">
+  <div class="flex justify-center my-8 py-8 mx-auto">
+      <input type="hidden" id="booking_id" name="booking_id" value="{{ booking.id }}">
+      <div class="w-1/2 p-6 space-y-4 md:space-y-6 sm:p-8 max-w-sm bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
+        <!-- Display a payment form -->
+        <form id="payment-form">
 
-    <div id="link-authentication-element">
-      <!--Stripe.js injects the Link Authentication Element-->
-    </div>
-    <div id="billing-element">
+            <div id="link-authentication-element">
+              <!--Stripe.js injects the Link Authentication Element-->
+            </div>
+            <div id="billing-element">
 
-    </div>
-    <div id="payment-element">
-      <!--Stripe.js injects the Payment Element-->
-    </div>
-    <button id="submit">
-      <div class="spinner hidden" id="spinner"></div>
-      <span id="button-text">Pay now</span>
-    </button>
-    <div id="payment-message" class="hidden"></div>
-</form>
+            </div>
+            <div id="payment-element">
+              <!--Stripe.js injects the Payment Element-->
+            </div>
+            <button id="submit" class="mt-8">
+              <div class="spinner hidden" id="spinner"></div>
+              <span id="button-text" class="text-white bg-dark-base hover:bg-base focus:ring-4 focus:outline-none focus:ring-base font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-dark-base dark:hover:bg-base dark:focus:ring-base">Pay now</span>
+            </button>
+            <div id="payment-message" class="hidden"></div>
+        </form>
+      </div>
+  </div> 
+</section>
 
 <script>const CSRF_TOKEN = '{{ csrf_token }}'</script>
 <script src="https://js.stripe.com/v3/"></script>

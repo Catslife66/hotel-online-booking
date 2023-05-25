@@ -50,14 +50,14 @@ def booking_success(request, pk):
     booking = Booking.objects.get(pk=pk)
     booking.is_paid = True
     booking.save()
-    room_type_id = RoomType.objects.get(title=booking.room_type).id
-    rooms = Room.objects.search_available(booking.check_in, booking.check_out, room_type_id)
+    room_type = RoomType.objects.get(title=booking.room_type)
+    rooms = Room.objects.search_available(booking.check_in, booking.check_out, room_type.id)
     
     booking_rooms = [BookingRoom.objects.create(booking_id=booking.id, room=room) for room in rooms]
     for booking_room in booking_rooms:
         booking_room.booking_id = booking.id
 
-    context = {'booking': booking}
+    context = {'booking': booking, 'room_type': room_type}
     return render(request, 'booking/booking-success.html', context)
 
 

@@ -35,3 +35,6 @@ fixtures/
 *.swo
 *.bak
 *.cache
+
+# Tailwind CSS
+node_modules/

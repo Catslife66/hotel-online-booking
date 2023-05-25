@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- styles -->
-    <link rel="stylesheet" href="{% block style %}{% endblock %}">
+    <!--tailwind styles -->
+    <link rel="stylesheet" href="{% static 'css/tailwind-output.css' %}">
 
     <!-- htmx -->
     <script src="{% static 'js/htmx.min.js' %}" defer></script>
@@ -15,8 +15,10 @@
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
+    <!-- navbar -->
     {% include 'nav.html' %}
 
+    <!-- search form -->
     {% if request.path == '/' %}
         {% include 'search-form-base.html' %}
     {% elif 'account' in request.get_full_path %}
@@ -27,11 +29,18 @@
         {% include 'search-form.html' %}
     {% endif %}
     
-
+    <!-- main -->
     {% block content %}
         my hotel web
     {% endblock%}
 
+    <!-- footer -->
+    {% include 'footer.html' %}
+
+    
+    <!-- stripe payment -->
     <script src="https://js.stripe.com/v3/"></script>
+    <!-- flowbite style -->
+    <script src="{% static 'js/flowbite.min.js' %}"></script>
 </body>
 </html>
